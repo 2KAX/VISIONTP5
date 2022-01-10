@@ -21,6 +21,7 @@
 #include <sstream>
 
 #include "aruco/aruco.h"
+#include "Fruit.h"
 
 
 using namespace cv;
@@ -57,6 +58,9 @@ protected:
    
    // Size of the OpenGL window size
    Size              m_GlWindowSize;
+
+   //Contient tous les fruits qui sont en l'air
+   vector<Fruit> mFruits;
    
 // Methods
 public:
@@ -92,6 +96,9 @@ public:
    // Test using ArUco to display a 3D cube in OpenCV
    void  draw3DCube(cv::Mat img, int markerInd=0);
    void  draw3DAxis(cv::Mat img, int markerInd=0);
+
+   //Crée un fruit au niveau du canon
+   void generateNewFruit();
 };
 
 

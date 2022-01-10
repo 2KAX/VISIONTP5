@@ -197,15 +197,18 @@ void ArUco::drawScene() {
    // on charge la matrice d'ArUco 
    glLoadMatrixd(proj_matrix);
    
-   // On affiche le nombre de marqueurs (ne sert a rien)
    double modelview_matrix[16];
-   std::cout << "Number of markers: " << m_Markers.size() << std::endl;
-   
+   double modelview_matrix_canon[16];
+   bool is_canon_visible = false;
+   double modelview_matrix_recipient[16];
+   bool is_recipient_visible = false;
+
    glClear(GL_DEPTH_BUFFER_BIT);
 
    // Pour chaque marqueur detecte
    for (unsigned int m=0;m<m_Markers.size();m++)
    {
+	   
 	   // On recupere la matrice de modelview qui correspond au marqueur [m]
        m_Markers[m].glGetModelViewMatrix(modelview_matrix);
        glMatrixMode(GL_MODELVIEW);
@@ -221,21 +224,51 @@ void ArUco::drawScene() {
      
 	  // On sauvegarde la matrice courante
       glPushMatrix();
-	  // on choisit une couleur
-	  //On dessine d'une couleur différente chaque marqueur pour mieux voir.
-	  //En espérant que la position d'un marqueur dans m_Markers ne varie pas trop entre 2 frames (sinon, ça va clignoter..)
-	  glColor4f(((356*m)%256)/256.0, ((156 * m) % 256) / 256.0, ((456 * m) % 256) / 256.0, 0.4f);
+	  
 
-	  //On dessine une cube en fil de fer
-      //drawWireCube( m_MarkerSize );
+	  if (m_Markers[m].id == 235) { //Le canon
+		  is_canon_visible = true;
+		  
+		  for (int i = 0; i < 16; i++) {
+			  modelview_matrix_canon[i] = modelview_matrix[i];
+		  }
 
-      // Ajouter votre code ici !!
-	  drawPyramid(m_MarkerSize, GL_TRIANGLES);
-      
+		  glColor4f(0, 0, 1, 0.4f);
+		  drawPyramid(m_MarkerSize, GL_TRIANGLES);
+
+		  
+	  }
+
+	  if (m_Markers[m].id == 58) { //Le recipient
+		  is_recipient_visible = true;
+
+		  for (int i = 0; i < 16; i++) {
+			  modelview_matrix_recipient[i] = modelview_matrix[i];
+		  }
+
+		  glColor4f(1, 0, 0, 0.4f);
+		  drawBox(m_MarkerSize, GL_QUADS);
+
+	  }
 
       // On re=charge la matrice que l'on a sauvegarde
       glPopMatrix();
    }
+
+   if (is_canon_visible && is_recipient_visible) {
+	   for (int i = 0; i < mFruits.size(); i++) {
+		   switch (mFruits[i].update(modelview_matrix_canon, modelview_matrix_recipient)) {
+		   case :
+			   mFruits[i].draw(modelview_matrix_canon);
+			   break;
+		   case :
+
+			   break;
+		   }
+		   
+	   }
+   }
+   
    
    // Desactivation du depth test
    glDisable(GL_DEPTH_TEST);
@@ -295,4 +328,8 @@ void ArUco::draw3DAxis(cv::Mat img, int markerInd) {
       aruco::CvDrawingUtils::draw3dAxis(img, m_Markers[markerInd], m_CameraParams); 
    }
    
+}
+
+void ArUco::generateNewFruit() {
+	mFruits.push_back(Fruit(m_MarkerSize/3));
 }

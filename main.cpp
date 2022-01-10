@@ -46,7 +46,10 @@ void keyboard(GLFWwindow* window, int key, int scancode, int action, int mods) {
             exitFunction();
             exit(0);
             break;
-
+            //lors d'un appui sur la barre espace, une nouveau fruit est généré
+            case GLFW_KEY_SPACE:
+                arucoManager->generateNewFruit();
+                break;
         default:
             break;
         }
