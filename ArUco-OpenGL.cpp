@@ -217,7 +217,7 @@ void ArUco::drawScene() {
        glLoadMatrixd(modelview_matrix);
       
       // On dessine les axes X Y Z
-      drawAxis(m_MarkerSize);
+      //drawAxis(m_MarkerSize);
 
       // On se deplace sur Z de la moitie du marqueur pour dessiner "sur" le plan du marqueur
       glTranslatef(0, 0, m_MarkerSize/2.);
@@ -256,15 +256,24 @@ void ArUco::drawScene() {
    }
 
    if (is_canon_visible && is_recipient_visible) {
+
 	   for (int i = 0; i < mFruits.size(); i++) {
+
 		   switch (mFruits[i].update(modelview_matrix_canon, modelview_matrix_recipient)) {
-		   case :
+		   case Etat::DEHORS:
 			   mFruits[i].draw(modelview_matrix_canon);
-			   break;
-		   case :
 
 			   break;
+		   case Etat::SUPPRIMER:
+			   mFruits.erase(mFruits.begin() + i);
+			   i--;
+			   break;
 		   }
+		   
+		  
+
+		   //drawBox(m_MarkerSize, GL_QUADS);
+		   //cout << mFruits[i].y << endl;
 		   
 	   }
    }

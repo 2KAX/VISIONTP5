@@ -43,13 +43,14 @@ void keyboard(GLFWwindow* window, int key, int scancode, int action, int mods) {
         switch (key) {
             case GLFW_KEY_ESCAPE:
             //case KEY_ESCAPE:
-            exitFunction();
-            exit(0);
-            break;
-            //lors d'un appui sur la barre espace, une nouveau fruit est généré
-            case GLFW_KEY_SPACE:
+            //exitFunction();
+            //exit(0);
+          
+                    //lors d'un appui sur la barre espace, une nouveau fruit est généré
+
                 arucoManager->generateNewFruit();
-                break;
+
+            break;
         default:
             break;
         }
@@ -79,9 +80,11 @@ void idle() {
     // Keyboard manager + waiting for key
     char retKey = cv::waitKey(1);
     if (retKey == KEY_ESCAPE) {
-        exitFunction();
-        exit(EXIT_SUCCESS);
+
+        /*exitFunction();
+        exit(EXIT_SUCCESS);*/
     }
+
 }
 
 
