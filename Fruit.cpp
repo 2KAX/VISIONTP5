@@ -29,15 +29,15 @@ Fruit::Fruit(float _size)
 Etat Fruit::update(double modelview_matrix_canon[16], double modelview_matrix_recipient[16])
 {
 	// update des vitesses et positions
-	v_y = v_y - 9.81 * marqueur_size * dt; // pesanteur de la lune
+	v_y = v_y - 9.81 * dt; // pesanteur de la lune
 	x = x + v_x * dt;
 	y = y + v_y * dt;
 	z = z + v_z * dt;
 
-	// update de l'état
+	// update de l'Ã©tat
 	if (y < -1000 * size) { etat = SUPPRIMER; }
 
-	// Obtenir les coordonnees monde du récipient
+	// Obtenir les coordonnees monde du rÃ©cipient
 
 	// Obtenir les coordonnees monde du fruit
 
