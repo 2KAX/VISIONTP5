@@ -1,5 +1,18 @@
 #include "Fruit.h"
+#include <Windows.h>
 #include <GL/gl.h>
+
+Fruit::Fruit()
+{
+	x = 0.0f;
+	y = 0.0f;
+	z = 0.0f;
+	v_x = 0.0f;
+	v_y = 1.0f;
+	v_z = 1.0f;
+	etat = DEHORS;
+	size = 1.0f;
+}
 
 Fruit::Fruit(float _size)
 {
@@ -7,8 +20,8 @@ Fruit::Fruit(float _size)
 	y = 0.0f;
 	z = 0.0f;
 	v_x = 0.0f;
-	v_y = 0.0f;
-	v_z = 0.0f;
+	v_y = _size;
+	v_z = _size;
 	etat = DEHORS;
 	size = _size;
 }
@@ -57,8 +70,10 @@ void Fruit::draw(double modelview_matrix_canon[16])
 	v[0][2] = v[3][2] = v[4][2] = v[7][2] = -size / 2;
 	v[1][2] = v[2][2] = v[5][2] = v[6][2] = size / 2;
 
+	glLoadMatrixd(modelview_matrix_canon);
+
 	for (i = 5; i >= 0; i--) {
-		glBegin(type);
+		glBegin(GL_QUADS);
 		glNormal3fv(&n[i][0]);
 		glVertex3fv(&v[faces[i][0]][0]);
 		glVertex3fv(&v[faces[i][1]][0]);
