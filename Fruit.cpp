@@ -29,13 +29,21 @@ Fruit::Fruit(float _size)
 Etat Fruit::update(double modelview_matrix_canon[16], double modelview_matrix_recipient[16])
 {
 	// update des vitesses et positions
-	v_y = v_y - 1.62 * dt; // pesanteur de la lune
+	v_y = v_y - 1.62 * marqueur_size * dt; // pesanteur de la lune
 	x = x + v_x * dt;
 	y = y + v_y * dt;
 	z = z + v_z * dt;
 
 	// update de l'état
 	if (y < -1000 * size) { etat = SUPPRIMER; }
+
+	// Obtenir les coordonnees monde du récipient
+
+	// Obtenir les coordonnees monde du fruit
+
+	if (false) {
+		etat = DEDANS;
+	}
 
 	return etat;
 }
@@ -71,15 +79,16 @@ void Fruit::draw(double modelview_matrix_canon[16])
 	v[1][2] = v[2][2] = v[5][2] = v[6][2] = size / 2;
 
 	glLoadMatrixd(modelview_matrix_canon);
+	glTranslatef(x, y, z);
 
 	for (i = 5; i >= 0; i--) {
 		glBegin(GL_QUADS);
+		glColor4f(1.0f, 1.0f, 0.0f, 0.4f);
 		glNormal3fv(&n[i][0]);
 		glVertex3fv(&v[faces[i][0]][0]);
 		glVertex3fv(&v[faces[i][1]][0]);
 		glVertex3fv(&v[faces[i][2]][0]);
 		glVertex3fv(&v[faces[i][3]][0]);
-		glColor4f(1.0f,1.0f,0.0f,0.4f);
 		glEnd();
 	}
 }

@@ -8,7 +8,8 @@ private :
 	float v_x, v_y, v_z; // Vitesse du fruit dans le repère du marqueur qui lance
 	Etat etat; // Etat du fruit
 	float size; // Taille d_un fruit
-	const float dt = 1 / 60; // Durée pour l'intégration des positions et vitesses entre deux frames
+	float marqueur_size = 0.105f; // Taille d'un marqueur
+	float dt = 1.0f / 60; // Durée pour l'intégration des positions et vitesses entre deux frames
 public :
 	Fruit();
 	Fruit(float size);
